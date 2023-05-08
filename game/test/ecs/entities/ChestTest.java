@@ -2,6 +2,7 @@ package ecs.entities;
 
 import static org.junit.Assert.*;
 
+import builder.ChestBuilder;
 import ecs.components.*;
 import ecs.items.ItemData;
 import ecs.items.ItemDataGenerator;
@@ -29,7 +30,7 @@ public class ChestTest {
         cleanup();
         List<ItemData> itemData = List.of();
         Point position = new Point(0, 0);
-        Chest c = new Chest(itemData, position);
+        Entity c = ChestBuilder.buildChest(itemData, position);
         Game.getEntities().addAll(Game.getEntitiesToAdd());
         Game.getEntitiesToAdd().clear();
         assertEquals("Chest is added to Game", 1, Game.getEntities().size());
@@ -59,7 +60,7 @@ public class ChestTest {
         cleanup();
         List<ItemData> itemData = List.of(new ItemDataGenerator().generateItemData());
         Point position = new Point(0, 0);
-        Chest c = new Chest(itemData, position);
+        Entity c = ChestBuilder.buildChest(itemData, position);
         Game.getEntities().addAll(Game.getEntitiesToAdd());
         Game.getEntitiesToAdd().clear();
         assertEquals(1, Game.getEntities().size());
@@ -80,7 +81,7 @@ public class ChestTest {
         cleanup();
         List<ItemData> itemData = List.of(new ItemDataGenerator().generateItemData());
         Point position = new Point(0, 0);
-        Chest c = new Chest(itemData, position);
+        Entity c = ChestBuilder.buildChest(itemData, position);
         Game.getEntities().addAll(Game.getEntitiesToAdd());
         Game.getEntitiesToAdd().clear();
         Game.getEntities().remove(c);
@@ -113,7 +114,7 @@ public class ChestTest {
                             }
                         },
                         DesignLabel.DEFAULT);
-        Chest newChest = Chest.createNewChest();
+        Entity newChest = ChestBuilder.createNewChest();
         Game.getEntities().addAll(Game.getEntitiesToAdd());
         Game.getEntitiesToAdd().clear();
         assertTrue("Chest is added to Game", Game.getEntities().contains(newChest));

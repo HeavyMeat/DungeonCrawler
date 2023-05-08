@@ -24,9 +24,9 @@ import tools.Constants;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Game.class, Gdx.class, Constants.class})
 class GameTest {
-    Game game;
-    SpriteBatch batch;
-    int someArbitraryValueGreater0forDelta = 7;
+    private Game game;
+    private SpriteBatch batch;
+    private int someArbitraryValueGreater0forDelta = 7;
 
     // Because of use of PowerMockRunner we need an empty constructor here
     public GameTest() {}
@@ -96,7 +96,7 @@ class GameTest {
 
     @Test
     public void addEntity() {
-        Entity e1 = Mockito.mock(Entity.class);
+        Entity e1 = new Entity();
         Game.addEntity(e1);
         assertTrue(Game.getEntitiesToAdd().contains(e1));
         assertEquals(1, Game.getEntitiesToAdd().size());
@@ -106,7 +106,7 @@ class GameTest {
 
     @Test
     public void removeEntity() {
-        Entity e1 = Mockito.mock(Entity.class);
+        Entity e1 = new Entity();
         Game.removeEntity(e1);
         assertTrue(Game.getEntitiesToRemove().contains(e1));
         assertEquals(1, Game.getEntitiesToRemove().size());
@@ -123,10 +123,10 @@ class GameTest {
 
     @Test
     public void setHero() {
-        Entity hero = Mockito.mock(Entity.class);
+        Entity hero = new Entity();
         Game.setHero(hero);
         assertEquals(hero, Game.getHero().get());
-        Entity hero2 = Mockito.mock(Entity.class);
+        Entity hero2 = new Entity();
         Game.setHero(hero2);
         assertEquals(hero2, Game.getHero().get());
     }
