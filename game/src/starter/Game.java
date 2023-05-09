@@ -11,8 +11,9 @@ import configuration.Configuration;
 import configuration.KeyboardConfig;
 import controller.AbstractController;
 import controller.SystemController;
-import ecs.components.MissingComponentException;
-import ecs.components.PositionComponent;
+import ecs.components.*;
+import ecs.components.collision.ICollide;
+import ecs.components.skill.SkillComponent;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
 import ecs.entities.MonsterFactory;
@@ -144,6 +145,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
             if (i % 2 == 0) addEntity(MonsterFactory.createMonster("character/monster/chort"));
             else addEntity(MonsterFactory.createMonster("character/monster/imp"));
         }
+        createQuestNPC();
     }
 
     private void manageEntitiesSets() {
@@ -282,5 +284,24 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         new XPSystem();
         new SkillSystem();
         new ProjectileSystem();
+    }
+
+    public void createQuestNPC() {
+        Entity questNPC = new Hero();
+        questNPC.removeComponent(PlayableComponent.class);
+        questNPC.removeComponent(HealthComponent.class);
+        questNPC.removeComponent(SkillComponent.class);
+        questNPC.removeComponent(HitboxComponent.class);
+
+        ICollide ie =
+                new ICollide() {
+                    @Override
+                    public void onCollision(Entity a, Entity b, Tile.Direction from) {
+                        if (b == hero) {
+                            DummyQuizQuestionList.getRandomQuestion().askQuizQuestionWithUI();
+                        }
+                    }
+                };
+        new HitboxComponent(questNPC, ie, HitboxComponent.DEFAULT_COLLIDER);
     }
 }
