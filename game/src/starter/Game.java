@@ -15,6 +15,7 @@ import ecs.components.MissingComponentException;
 import ecs.components.PositionComponent;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
+import ecs.entities.MonsterFactory;
 import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
@@ -37,7 +38,7 @@ import tools.Point;
 /** The heart of the framework. From here all strings are pulled. */
 public class Game extends ScreenAdapter implements IOnLevelLoader {
 
-    private final LevelSize LEVELSIZE = LevelSize.SMALL;
+    private final LevelSize LEVELSIZE = LevelSize.MEDIUM;
 
     /**
      * The batch is necessary to draw ALL the stuff. Every object that uses draw need to know the
@@ -138,6 +139,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         currentLevel = levelAPI.getCurrentLevel();
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
+
+        for (int i = 0; i < 5; i++) {
+            if (i % 2 == 0) addEntity(MonsterFactory.createMonster("character/monster/chort"));
+            else addEntity(MonsterFactory.createMonster("character/monster/imp"));
+        }
     }
 
     private void manageEntitiesSets() {

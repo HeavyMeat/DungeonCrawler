@@ -14,7 +14,7 @@ import graphic.Animation;
  */
 public class Hero extends Entity {
 
-    private final int fireballCoolDown = 5;
+    private final int fireballCoolDown = 1;
     private final float xSpeed = 0.3f;
     private final float ySpeed = 0.3f;
 
@@ -33,6 +33,8 @@ public class Hero extends Entity {
         setupHitboxComponent();
         PlayableComponent pc = new PlayableComponent(this);
         setupFireballSkill();
+        SkillComponent sc = new SkillComponent(this);
+        sc.addSkill(firstSkill);
         pc.setSkillSlot1(firstSkill);
     }
 
